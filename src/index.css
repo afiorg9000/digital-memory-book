@@ -1,0 +1,271 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Book-themed design system with paper textures and warm tones. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Paper-like background with warm cream tones */
+    --background: 45 20% 97%;
+    --foreground: 25 15% 15%;
+
+    /* Book page colors */
+    --card: 42 18% 96%;
+    --card-foreground: 25 15% 15%;
+
+    --popover: 42 18% 96%;
+    --popover-foreground: 25 15% 15%;
+
+    /* Rich book spine colors */
+    --primary: 0 60% 25%;
+    --primary-foreground: 45 25% 95%;
+
+    /* Soft paper tones */
+    --secondary: 40 15% 92%;
+    --secondary-foreground: 0 25% 20%;
+
+    /* Muted text like old ink */
+    --muted: 40 12% 88%;
+    --muted-foreground: 0 15% 45%;
+
+    /* Accent like bookmark ribbon */
+    --accent: 0 70% 50%;
+    --accent-foreground: 45 25% 95%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 45 25% 95%;
+
+    /* Subtle page borders */
+    --border: 40 15% 85%;
+    --input: 40 15% 90%;
+    --ring: 0 60% 25%;
+
+    /* Book-like rounded corners */
+    --radius: 0.75rem;
+
+    /* Typography */
+    --font-serif: 'EB Garamond', 'Lora', Georgia, serif;
+    --font-body: 'Lora', 'EB Garamond', Georgia, serif;
+
+    /* Paper texture gradient */
+    --paper-texture: linear-gradient(135deg, 
+      hsl(45 20% 97%) 0%, 
+      hsl(42 18% 96%) 25%, 
+      hsl(40 15% 95%) 50%, 
+      hsl(42 18% 96%) 75%, 
+      hsl(45 20% 97%) 100%);
+    
+    /* Book shadows */
+    --book-shadow: 0 8px 30px -5px hsl(0 60% 25% / 0.3);
+    --page-shadow: 0 2px 8px -2px hsl(0 60% 25% / 0.1);
+    
+    /* Page animations */
+    --page-turn-duration: 0.8s;
+    --page-hover-duration: 0.3s;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-serif overflow-hidden;
+    font-family: var(--font-body);
+    background: var(--paper-texture);
+    /* Performance optimizations */
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+  }
+
+  /* Optimize animations */
+  * {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+@layer components {
+  /* Book page animation classes - optimized for performance */
+  .page-turn-enter {
+    transform: rotateY(-90deg);
+    transform-origin: left center;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  
+  .page-turn-enter-active {
+    transform: rotateY(0deg);
+    opacity: 1;
+    transition: transform var(--page-turn-duration) ease-in-out,
+                opacity calc(var(--page-turn-duration) / 2) ease-in;
+    will-change: transform, opacity;
+  }
+  
+  .page-turn-exit {
+    transform: rotateY(0deg);
+    opacity: 1;
+    will-change: transform, opacity;
+  }
+  
+  .page-turn-exit-active {
+    transform: rotateY(90deg);
+    opacity: 0;
+    transition: transform var(--page-turn-duration) ease-in-out,
+                opacity calc(var(--page-turn-duration) / 2) ease-out;
+    will-change: transform, opacity;
+  }
+
+  /* Book binding effect */
+  .book-spine {
+    background: linear-gradient(to right,
+      hsl(var(--primary)) 0%,
+      hsl(var(--primary)) 30%,
+      hsl(var(--primary) / 0.8) 50%,
+      hsl(var(--primary)) 70%,
+      hsl(var(--primary)) 100%);
+    box-shadow: inset 0 0 10px hsl(var(--primary) / 0.3);
+  }
+
+  /* Paper texture overlay - optimized for performance */
+  .paper-texture {
+    background: var(--paper-texture);
+    position: relative;
+    will-change: auto;
+    /* Ensure both pages load simultaneously */
+    content-visibility: auto;
+    contain-intrinsic-size: 100vh 50vw;
+  }
+  
+  .paper-texture::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 25% 25%, hsl(var(--foreground) / 0.02) 1px, transparent 1px),
+      radial-gradient(circle at 75% 75%, hsl(var(--foreground) / 0.02) 1px, transparent 1px);
+    background-size: 24px 24px, 36px 36px;
+    pointer-events: none;
+    will-change: auto;
+  }
+
+  /* Book page layout optimization */
+  .book-page-layout {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    /* Ensure both pages render simultaneously */
+    contain: layout style paint;
+  }
+
+  .book-page-left,
+  .book-page-right {
+    width: 50%;
+    height: 100%;
+    /* Optimize rendering */
+    contain: layout style paint;
+    content-visibility: auto;
+  }
+
+  /* Chapter number styling */
+  .chapter-number {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    color: hsl(var(--accent));
+    text-shadow: 0 1px 2px hsl(var(--primary) / 0.1);
+  }
+
+  /* Elegant quote styling */
+  .story-quote {
+    position: relative;
+    font-style: italic;
+    padding: 1rem 2rem;
+  }
+  
+  .story-quote::before,
+  .story-quote::after {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    color: hsl(var(--accent) / 0.3);
+    position: absolute;
+    line-height: 1;
+  }
+  
+  .story-quote::before {
+    content: '"';
+    top: 0;
+    left: 0;
+  }
+  
+  .story-quote::after {
+    content: '"';
+    bottom: -1rem;
+    right: 0;
+  }
+}
