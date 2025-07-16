@@ -81,4 +81,3 @@ export const BookCover = ({ onStartReading }: BookCoverProps) => {
       </div>
     </div>
   );
-};
